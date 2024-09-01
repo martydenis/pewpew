@@ -1,4 +1,4 @@
-import { getDistance, roundToTwo, getAngleBetweenPoints, dpi, initControls, initStopPropagation } from "../sandbox-utils/utilities.js";
+import { getDistance, roundToTwo, getAngleBetweenPoints, dpi, initControls, initStopPropagation } from "./sandbox-utils/utilities.js";
 
 initControls();
 initStopPropagation();
@@ -7,8 +7,6 @@ initStopPropagation();
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const enableBorderCollisions = false;
-const FPS = 60;
-// const INTERVAL = Math.round(1000 / FPS) // ms
 const THIN_LINE_WIDTH = dpi(1);
 const THICK_LINE_WIDTH = dpi(2);
 const colors = {
