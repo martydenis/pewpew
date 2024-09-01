@@ -14,7 +14,7 @@
     </head>
 
     <body>
-        <canvas id="canvas" width="1200" height="800"></canvas>
+        <!-- <canvas id="canvas" width="1200" height="800"></canvas> -->
 
         <button class="controls__toggler-button controls--open js-controls-toggler js-stop-propagation">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
@@ -40,8 +40,8 @@
                     </svg>
 
                     <p>
-                        <strong>Hold left click</strong>
-                        to aim and choose power
+                        <strong>Left click</strong>
+                        to fire
                     </p>
                 </li>
                 <li>
@@ -51,8 +51,19 @@
                     </svg>
 
                     <p>
-                        <strong>Release left click</strong>
-                        to fire
+                        <strong>Hold Left click + Move mouse vertically</strong>
+                        to change power
+                    </p>
+                </li>
+                <li>
+                    <svg width="22" height="32" viewBox="0 0 22 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0.75" y="0.75" width="20.5" height="30.5" rx="10.25" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M10 15H5.00691C4.45463 15 4.00691 14.5523 4.00691 14V13.0333C4.00691 13.0111 4.00634 12.992 4.00529 12.9698C3.9823 12.4828 3.80705 6.23656 9.81646 4.30559C10.4173 4.11251 11 4.58892 11 5.22004V14C11 14.5523 10.5523 15 10 15Z" fill="currentColor" fill-opacity="0.22" />
+                    </svg>
+
+                    <p>
+                        <strong>Hold Left click + Move mouse horizontally</strong>
+                        to aim
                     </p>
                 </li>
                 <li>
@@ -71,6 +82,7 @@
             <p><a href="#" class="controls__panel__link">Close</a></p>
         </div>
 
+        <script src="./lib/pixi/pixi.js"></script>
         <script type="module" src="./index.js"></script>
     </body>
 </html>

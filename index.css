@@ -11,4 +11,26 @@ canvas {
 
 body {
     background-color: #000000;
+    user-select: none;
+}
+
+canvas {
+    cursor: none;
+}
+
+#debug-bar {
+    position: absolute;
+    color: #b4b4b4;
+    left: 10px;
+    top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.8rem;
+}
+
+#debug-bar p {
+    margin: 0;
 }
