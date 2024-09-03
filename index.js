@@ -1,4 +1,4 @@
-import { getDistance, getAngleBetweenPoints, toDegrees, easeOut, easeOutQuart, initControls, initStopPropagation } from "./sandbox-utils/utilities.js";
+import { getDistance, getAngleBetweenPoints, toDegrees, easeOut, easeOutQuart, easeOutQuint, initControls, initStopPropagation } from "./sandbox-utils/utilities.js";
 
 // CONFIGURATION
 const ENABLE_BORDER_COLLISIONS = false;
@@ -291,7 +291,7 @@ class Spaceship {
         this.pos = options?.pos ? options.pos : { x: 0, y: 0 };
         this.radius = 16; // px
         this.color = options?.color ? options.color : colors.main;
-        this.minPower = 1.5;
+        this.minPower = 1.25;
         this.maxPower = 5;
 
         this.bodyAngle = 0;
@@ -738,8 +738,8 @@ class Bullet extends Projectile {
 
         const gravitationalVector = this.getGravitationalVector();
         if (gravitationalVector) {
-            this.vel.x += gravitationalVector.x;
-            this.vel.y += gravitationalVector.y;
+            this.vel.x += gravitationalVector.x * delta;
+            this.vel.y += gravitationalVector.y * delta;
         }
 
         super.update(delta);
@@ -757,8 +757,8 @@ class Bullet extends Projectile {
             const angle = getAngleBetweenPoints(this.pos, planet.pos);
             const force = (this.mass * planet.mass) / (distanceSq);
 
-            vector.x += Math.cos(angle) * force;
-            vector.y += Math.sin(angle) * force;
+            vector.x += easeOutQuint(Math.cos(angle) * force);
+            vector.y += easeOutQuint(Math.sin(angle) * force);
         }
 
         return vector;
@@ -766,7 +766,11 @@ class Bullet extends Projectile {
 
     kill(pos = { ...this.pos }, normalAngle) {
         if (this.isOutsideCanvas() === false) {
-            new Explosion(pos, this.power, normalAngle, (normalAngle == undefined ? this.vel : undefined));
+            if (normalAngle === undefined) {
+                new Explosion(pos, this.power, undefined, this.vel);
+            } else {
+                new Explosion(pos, this.power, normalAngle, null);
+            }
         }
 
         super.kill();
@@ -843,7 +847,7 @@ class Explosion extends DynamicEntity {
             this.vel = { ...vel };
         }
         this.power = Math.max(2, power);
-        this.angle = angle - Math.PI / 2;
+        this.angle = angle === undefined ? undefined : angle - Math.PI / 2;
         this.radius = Math.round(this.power * 5);
         this.color = color ? color : colors.main;
 
@@ -918,7 +922,7 @@ class Planet {
         this.mass = Math.max(100, mass);
         this.color = colors.main;
         this.radius = radius;
-        this.outerRingRadius = radius + (this.mass * 0.25);
+        this.outerRingRadius = radius + (this.mass * 0.5);
         this.linesCount = Math.max(10, Math.round(this.outerRingRadius / 5));
         this.lineArea = 2 * Math.PI / this.linesCount;
         this.lineLength = 0.15; // 0 to 1. Relative to the space available
@@ -987,7 +991,7 @@ class Planet {
 new Planet({
     x: viewport.initial.width / 2,
     y: viewport.initial.height / 2
-}, 50, 250);
+}, 50, 100);
 
 // new Planet({
 //    x: viewport.initial.width / 4.5 * 3,
@@ -997,7 +1001,7 @@ new Planet({
 new Planet({
     x: 20,
     y: viewport.initial.height - 20
-}, 50, 200);
+}, 50, 80);
 
 // new Planet({
 //   x: viewport.initial.width / 2 + 30,
@@ -1007,7 +1011,7 @@ new Planet({
 new Planet({
     x: viewport.initial.width - 20,
     y: 20
-}, 30, 250);
+}, 30, 100);
 
 
 let playerShip = new Spaceship();
