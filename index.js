@@ -1,4 +1,4 @@
-import { getDistance, getAngleBetweenPoints, toDegrees, easeOut, easeOutQuart, easeOutQuint, initControls, initStopPropagation } from "./sandbox-utils/utilities.js";
+import { getDistance, getAngleBetweenPoints, toDegrees, easeOut, easeOutQuart, initControls, initStopPropagation } from "./sandbox-utils/utilities.js";
 
 // CONFIGURATION
 const ENABLE_BORDER_COLLISIONS = false;
@@ -757,8 +757,8 @@ class Bullet extends Projectile {
             const angle = getAngleBetweenPoints(this.pos, planet.pos);
             const force = (this.mass * planet.mass) / (distanceSq);
 
-            vector.x += easeOutQuint(Math.cos(angle) * force);
-            vector.y += easeOutQuint(Math.sin(angle) * force);
+            vector.x += easeOutQuart(Math.cos(angle) * force);
+            vector.y += easeOutQuart(Math.sin(angle) * force);
         }
 
         return vector;
