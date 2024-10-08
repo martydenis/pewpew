@@ -1,3 +1,6 @@
+<?php
+    $is_prod = (defined('IS_PROD') && constant('IS_PROD') === true);
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -82,7 +85,12 @@
             <p><a href="#" class="controls__panel__link">Close</a></p>
         </div>
 
-        <script src="./lib/pixi/pixi.js"></script>
+        <?php if ($is_prod): ?>
+            <script src="./lib/pixi/pixi.min.js"></script>
+            <script src="./lib/pixi/unsafe-eval.min.js"></script>
+        <?php else: ?>
+            <script src="./lib/pixi/pixi.js"></script>
+        <?php endif; ?>
         <script type="module" src="./index.js"></script>
     </body>
 </html>
